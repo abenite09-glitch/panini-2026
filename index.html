@@ -1,666 +1,404 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Álbum Panini · Mundial 2026</title>
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#3B6D11" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Panini 2026" />
-  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>Álbum Panini · Mundial 2026</title>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="theme-color" content="#0D47A1"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Panini 2026"/>
+<link rel="apple-touch-icon" href="/icons/icon-192.png"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060f1e;
+  --s1:#0a1830;
+  --s2:#0f2040;
+  --s3:#162850;
+  --bd:rgba(96,165,250,0.15);
+  --bd2:rgba(96,165,250,0.32);
+  --bda:rgba(96,165,250,0.5);
+  --t:#dbeafe;
+  --t2:#93c5fd;
+  --t3:#4a7fba;
+  --acc:#1d4ed8;
+  --al:#60a5fa;
+  --gbg:#052e16;--gbr:#16a34a;--gt:#4ade80;
+  --abg:#431407;--abr:#ea580c;--at:#fb923c;
+  --rbg:#3a0f0f;--rbr:#dc2626;--rt:#f87171;
+  --foil:#F5E070;
+}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--t)}
+.app{display:flex;flex-direction:column;height:100dvh;max-width:480px;margin:0 auto;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* Header */
+.hdr{padding:10px 14px 10px;background:var(--s1);border-bottom:0.5px solid var(--bd2);flex-shrink:0}
+.hdr-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.logo-wrap{flex-shrink:0}
+.app-info{flex:1}
+.app-title{font-size:15px;font-weight:700;color:var(--al);letter-spacing:-0.3px}
+.app-sub{font-size:10px;color:var(--t3);margin-top:1px}
+.pct-badge{background:rgba(29,78,216,0.4);border:0.5px solid var(--bda);border-radius:20px;padding:3px 10px;font-size:14px;font-weight:700;color:var(--al)}
+.prog-track{background:var(--s3);border-radius:4px;height:5px;overflow:hidden;margin-bottom:8px}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--al));border-radius:4px;transition:width .4s}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.stat{background:var(--bg);border:0.5px solid var(--bd);border-radius:8px;padding:5px 3px;text-align:center}
+.stat-n{font-size:15px;font-weight:700}
+.stat-n.g{color:var(--gt)}.stat-n.r{color:var(--rt)}.stat-n.a{color:var(--at)}.stat-n.w{color:var(--al)}
+.stat-l{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em}
 
-    :root {
-      --bg: #0f1f07;
-      --surface: #182f0b;
-      --surface2: #1f3d0f;
-      --border: rgba(151, 196, 89, 0.15);
-      --border2: rgba(151, 196, 89, 0.3);
-      --text: #e8f5d6;
-      --text2: #a8c880;
-      --text3: #6b9044;
-      --green-bg: #1e4010;
-      --green-border: #639922;
-      --green-text: #97C459;
-      --amber-bg: #3a2a08;
-      --amber-border: #BA7517;
-      --amber-text: #EF9F27;
-      --red-bg: #3a0f0f;
-      --red-border: #A32D2D;
-      --red-text: #F09595;
-      --accent: #3B6D11;
-      --accent-light: #97C459;
-    }
+/* Controls */
+.ctrl{padding:8px 14px 6px;background:var(--s1);flex-shrink:0;display:flex;flex-direction:column;gap:7px}
+.row{display:flex;gap:7px;align-items:center}
+.sw{flex:1;position:relative}
+.sw input{width:100%;background:var(--bg);border:0.5px solid var(--bd2);border-radius:10px;color:var(--t);font-size:14px;padding:8px 10px 8px 32px;outline:none;-webkit-appearance:none}
+.sw input::placeholder{color:var(--t3)}
+.sw input:focus{border-color:var(--bda);box-shadow:0 0 0 3px rgba(96,165,250,0.12)}
+.si{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--t3);pointer-events:none}
+.team-sel{background:var(--bg);border:0.5px solid var(--bd2);border-radius:10px;color:var(--t);font-size:12px;padding:8px 8px;outline:none;flex:1;max-width:160px}
+.team-sel option{background:#0a1830;color:var(--t)}
+.clr{background:var(--s3);border:0.5px solid var(--bd);border-radius:10px;color:var(--t2);font-size:12px;padding:8px 10px;cursor:pointer;white-space:nowrap}
+.filters{display:flex;gap:5px}
+.fb{flex:1;font-size:11px;font-weight:500;padding:6px 3px;border-radius:8px;border:0.5px solid var(--bd);background:var(--bg);color:var(--t3);cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
+.fb.fa.on{background:var(--s3);color:var(--t);border-color:var(--bd2)}
+.fb.ft.on{background:var(--gbg);color:var(--gt);border-color:var(--gbr)}
+.fb.ff.on{background:var(--rbg);color:var(--rt);border-color:var(--rbr)}
+.fb.fr.on{background:var(--abg);color:var(--at);border-color:var(--abr)}
 
-    html, body {
-      height: 100%;
-      overflow: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
+/* Legend & count */
+.leg-bar{display:flex;gap:12px;padding:5px 14px;background:var(--s1);border-bottom:0.5px solid var(--bd);flex-shrink:0;align-items:center}
+.leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--t3)}
+.ldot{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+.cbar{padding:4px 14px;font-size:11px;color:var(--t3);flex-shrink:0;background:var(--bg)}
 
-    .app {
-      display: flex;
-      flex-direction: column;
-      height: 100dvh;
-      max-width: 480px;
-      margin: 0 auto;
-      padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
-    }
+/* Grid */
+.gwrap{flex:1;overflow-y:auto;padding:8px 10px;-webkit-overflow-scrolling:touch}
+.team-hdr{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;padding:8px 2px 4px;border-bottom:0.5px solid var(--bd);margin-bottom:5px;display:flex;align-items:center;justify-content:space-between}
+.team-hdr:first-child{padding-top:2px}
+.t-mini{font-size:10px;color:var(--gt);font-weight:600;letter-spacing:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));gap:5px;margin-bottom:4px}
 
-    /* Header */
-    .header {
-      padding: 14px 16px 10px;
-      background: var(--surface);
-      border-bottom: 0.5px solid var(--border);
-      flex-shrink: 0;
-    }
+/* Sticker chips */
+.stk{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:9px;border:0.5px solid var(--bd);height:64px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;background:var(--s2);transition:transform .1s;position:relative;padding:0 2px}
+.stk:active{transform:scale(.88)}
+.stk.have{background:var(--gbg);border-color:var(--gbr);border-width:1px}
+.stk.rep{background:var(--abg);border-color:var(--abr);border-width:1px}
+.sid{font-size:12px;font-weight:700;color:var(--t2);white-space:nowrap;margin-top:2px}
+.stk.have .sid{color:var(--gt)}.stk.rep .sid{color:var(--at)}
+.sname{font-size:9px;color:var(--t3);text-align:center;margin-top:2px;line-height:1.2;max-width:65px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stk.have .sname{color:#86efac}.stk.rep .sname{color:#fdba74}
+.scnt{font-size:10px;color:var(--t3);margin-top:2px}
+.stk.have .scnt{color:var(--gbr)}.stk.rep .scnt{color:var(--at);font-weight:700}
+.foil-dot{width:6px;height:6px;border-radius:50%;background:var(--foil);position:absolute;top:4px;right:4px;box-shadow:0 0 4px rgba(245,224,112,0.6)}
+/* Minus button on owned stickers */
+.stk-rm{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:rgba(0,0,0,0.5);border:0.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);font-size:11px;line-height:14px;text-align:center;display:none;cursor:pointer;z-index:2}
+.stk.have .stk-rm,.stk.rep .stk-rm{display:block}
+.no-r{text-align:center;padding:2rem;color:var(--t3);font-size:13px;grid-column:1/-1}
 
-    .header-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
+/* Bottom bar */
+.bbar{display:flex;gap:7px;padding:8px 14px;background:var(--s1);border-top:0.5px solid var(--bd);flex-shrink:0}
+.abt{flex:1;font-size:11px;font-weight:500;padding:8px 5px;border-radius:10px;border:0.5px solid var(--bd2);background:var(--s2);color:var(--t2);cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
+.abt.dng{color:var(--rt);border-color:var(--rbr)}
 
-    .app-title {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--accent-light);
-      letter-spacing: -0.3px;
-    }
-
-    .app-sub {
-      font-size: 11px;
-      color: var(--text3);
-      margin-top: 2px;
-    }
-
-    .pct-badge {
-      background: var(--green-bg);
-      border: 0.5px solid var(--green-border);
-      border-radius: 20px;
-      padding: 4px 10px;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--green-text);
-    }
-
-    .progress-track {
-      background: var(--surface2);
-      border-radius: 4px;
-      height: 6px;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
-      border-radius: 4px;
-      transition: width 0.4s ease;
-    }
-
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-    }
-
-    .stat {
-      background: var(--bg);
-      border: 0.5px solid var(--border);
-      border-radius: 8px;
-      padding: 6px 4px;
-      text-align: center;
-    }
-
-    .stat-n {
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .stat-n.g { color: var(--green-text); }
-    .stat-n.r { color: var(--red-text); }
-    .stat-n.a { color: var(--amber-text); }
-    .stat-n.w { color: var(--text2); }
-
-    .stat-l {
-      font-size: 9px;
-      color: var(--text3);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-top: 1px;
-    }
-
-    /* Controls */
-    .controls {
-      padding: 10px 16px 8px;
-      background: var(--surface);
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .search-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .search-wrap {
-      flex: 1;
-      position: relative;
-    }
-
-    .search-wrap input {
-      width: 100%;
-      background: var(--bg);
-      border: 0.5px solid var(--border2);
-      border-radius: 10px;
-      color: var(--text);
-      font-size: 15px;
-      padding: 9px 12px 9px 36px;
-      outline: none;
-      -webkit-appearance: none;
-    }
-
-    .search-wrap input::placeholder { color: var(--text3); }
-    .search-wrap input:focus { border-color: var(--green-border); }
-
-    .search-icon {
-      position: absolute;
-      left: 11px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 15px;
-      color: var(--text3);
-      pointer-events: none;
-    }
-
-    .clear-btn {
-      background: var(--surface2);
-      border: 0.5px solid var(--border);
-      border-radius: 10px;
-      color: var(--text2);
-      font-size: 13px;
-      padding: 9px 12px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .filters {
-      display: flex;
-      gap: 6px;
-    }
-
-    .filter-btn {
-      flex: 1;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 7px 4px;
-      border-radius: 8px;
-      border: 0.5px solid var(--border);
-      background: var(--bg);
-      color: var(--text3);
-      cursor: pointer;
-      text-align: center;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .filter-btn.f-all.active   { background: var(--surface2); color: var(--text); border-color: var(--border2); }
-    .filter-btn.f-tengo.active { background: var(--green-bg); color: var(--green-text); border-color: var(--green-border); }
-    .filter-btn.f-faltan.active{ background: var(--red-bg);   color: var(--red-text);   border-color: var(--red-border); }
-    .filter-btn.f-rep.active   { background: var(--amber-bg); color: var(--amber-text); border-color: var(--amber-border); }
-
-    /* Legend */
-    .legend {
-      padding: 6px 16px;
-      display: flex;
-      gap: 14px;
-      flex-shrink: 0;
-      background: var(--surface);
-      border-bottom: 0.5px solid var(--border);
-    }
-
-    .leg {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 10px;
-      color: var(--text3);
-    }
-
-    .leg-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 3px;
-      flex-shrink: 0;
-    }
-
-    /* Count bar */
-    .count-bar {
-      padding: 5px 16px;
-      font-size: 11px;
-      color: var(--text3);
-      flex-shrink: 0;
-    }
-
-    /* Grid */
-    .grid-wrap {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px 12px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
-      gap: 6px;
-    }
-
-    .sticker {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      border: 0.5px solid var(--border);
-      height: 56px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      background: var(--surface);
-      transition: transform 0.1s;
-      position: relative;
-    }
-
-    .sticker:active { transform: scale(0.9); }
-
-    .sticker.owned    { background: var(--green-bg); border-color: var(--green-border); }
-    .sticker.repeated { background: var(--amber-bg); border-color: var(--amber-border); }
-
-    .s-num {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text2);
-    }
-
-    .sticker.owned    .s-num { color: var(--green-text); }
-    .sticker.repeated .s-num { color: var(--amber-text); }
-
-    .s-cnt {
-      font-size: 10px;
-      color: var(--text3);
-      margin-top: 1px;
-    }
-
-    .sticker.owned    .s-cnt { color: var(--green-border); }
-    .sticker.repeated .s-cnt { color: var(--amber-border); font-weight: 700; }
-
-    .no-results {
-      grid-column: 1/-1;
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--text3);
-      font-size: 14px;
-    }
-
-    /* Bottom sheet */
-    .bottom-actions {
-      display: flex;
-      gap: 8px;
-      padding: 10px 16px;
-      background: var(--surface);
-      border-top: 0.5px solid var(--border);
-      flex-shrink: 0;
-    }
-
-    .action-btn {
-      flex: 1;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 9px 8px;
-      border-radius: 10px;
-      border: 0.5px solid var(--border2);
-      background: var(--surface2);
-      color: var(--text2);
-      cursor: pointer;
-      text-align: center;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .action-btn.danger { color: var(--red-text); border-color: var(--red-border); }
-
-    /* Modal */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 100;
-      align-items: flex-end;
-    }
-
-    .modal-overlay.open { display: flex; }
-
-    .modal {
-      background: var(--surface);
-      border: 0.5px solid var(--border2);
-      border-radius: 18px 18px 0 0;
-      width: 100%;
-      max-height: 60dvh;
-      display: flex;
-      flex-direction: column;
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 16px 10px;
-      border-bottom: 0.5px solid var(--border);
-    }
-
-    .modal-title { font-size: 15px; font-weight: 600; color: var(--text); }
-
-    .modal-close {
-      font-size: 22px;
-      color: var(--text3);
-      cursor: pointer;
-      line-height: 1;
-      padding: 4px;
-    }
-
-    .modal-body {
-      overflow-y: auto;
-      padding: 12px 16px;
-      -webkit-overflow-scrolling: touch;
-      flex: 1;
-    }
-
-    .tag-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .tag {
-      font-size: 12px;
-      font-weight: 500;
-      padding: 4px 10px;
-      border-radius: 20px;
-    }
-
-    .tag-miss { background: var(--red-bg); color: var(--red-text); border: 0.5px solid var(--red-border); }
-    .tag-rep  { background: var(--amber-bg); color: var(--amber-text); border: 0.5px solid var(--amber-border); }
-
-    .empty-msg {
-      color: var(--text3);
-      font-size: 14px;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    /* Install hint */
-    .install-hint {
-      display: none;
-      font-size: 11px;
-      color: var(--text3);
-      text-align: center;
-      padding: 4px 16px;
-      background: var(--surface);
-    }
-  </style>
+/* Modal */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:flex-end}
+.modal-ov.open{display:flex}
+.modal{background:var(--s1);border:0.5px solid var(--bd2);border-radius:18px 18px 0 0;width:100%;max-height:60dvh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0)}
+.mhdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:0.5px solid var(--bd)}
+.mtitle{font-size:14px;font-weight:600;color:var(--t)}
+.mclose{font-size:22px;color:var(--t3);cursor:pointer;padding:4px;line-height:1}
+.mbody{overflow-y:auto;padding:12px 14px;-webkit-overflow-scrolling:touch;flex:1}
+.tgrid{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px}
+.tm{background:var(--rbg);color:var(--rt);border:0.5px solid var(--rbr)}
+.ta{background:var(--abg);color:var(--at);border:0.5px solid var(--abr)}
+.empty{color:var(--t3);font-size:13px;text-align:center;padding:2rem}
+</style>
 </head>
 <body>
-
 <div class="app">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="header-top">
-      <div>
-        <div class="app-title">⚽ Panini Mundial 2026</div>
-        <div class="app-sub">Toca para marcar · Mantén para quitar</div>
-      </div>
-      <div class="pct-badge" id="pct">0%</div>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="prog-fill" style="width:0%"></div>
-    </div>
-    <div class="stats-row">
-      <div class="stat"><div class="stat-n w" id="s-total">670</div><div class="stat-l">Total</div></div>
-      <div class="stat"><div class="stat-n g" id="s-tengo">0</div><div class="stat-l">Tengo</div></div>
-      <div class="stat"><div class="stat-n r" id="s-faltan">670</div><div class="stat-l">Faltan</div></div>
-      <div class="stat"><div class="stat-n a" id="s-rep">0</div><div class="stat-l">Repetidas</div></div>
+<!-- Header -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="logo-wrap"><svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg" style="width:120px;height:60px">
+  <defs>
+    <linearGradient id="tg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8C840"/>
+      <stop offset="50%" stop-color="#F5E070"/>
+      <stop offset="100%" stop-color="#C8A420"/>
+    </linearGradient>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#0D47A1"/>
+    </linearGradient>
+  </defs>
+  <!-- Trophy cup -->
+  <path d="M38 4 L34 4 C33 4 32 5 32 6 L30 18 C30 22 32 26 36 28 L36 32 L34 32 L33 36 L47 36 L46 32 L44 32 L44 28 C48 26 50 22 50 18 L48 6 C48 5 47 4 46 4 Z" fill="url(#tg)" stroke="#B8960A" stroke-width="0.5"/>
+  <!-- Trophy base -->
+  <rect x="31" y="36" width="18" height="3" rx="1" fill="url(#tg)" stroke="#B8960A" stroke-width="0.5"/>
+  <rect x="29" y="39" width="22" height="2" rx="1" fill="url(#tg)" stroke="#B8960A" stroke-width="0.5"/>
+  <!-- Trophy handles -->
+  <path d="M32 10 C28 10 26 13 26 16 C26 19 28 21 32 21" fill="none" stroke="url(#tg)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M48 10 C52 10 54 13 54 16 C54 19 52 21 48 21" fill="none" stroke="url(#tg)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Shine on trophy -->
+  <ellipse cx="38" cy="14" rx="3" ry="5" fill="rgba(255,255,255,0.2)" transform="rotate(-15 38 14)"/>
+  <!-- FIFA WORLD CUP text -->
+  <text x="60" y="18" font-family="-apple-system,sans-serif" font-size="7" font-weight="700" fill="#F5E070" letter-spacing="0.5">FIFA WORLD CUP</text>
+  <!-- 2026 big number -->
+  <text x="60" y="33" font-family="-apple-system,sans-serif" font-size="18" font-weight="900" fill="white" letter-spacing="-0.5">2026</text>
+  <!-- Host countries strip -->
+  <rect x="60" y="36" width="14" height="3" rx="1" fill="#E53935"/>
+  <rect x="76" y="36" width="14" height="3" rx="1" fill="#F5E070"/>
+  <rect x="92" y="36" width="14" height="3" rx="1" fill="#1565C0"/>
+  <!-- Subtitle -->
+  <text x="60" y="46" font-family="-apple-system,sans-serif" font-size="5.5" fill="rgba(150,190,255,0.7)" letter-spacing="0.3">CANADA · MEXICO · USA</text>
+</svg></div>
+    <div class="app-info">
+      <div class="app-sub" style="font-size:11px;color:var(--t2)">Toca para marcar · ✕ para quitar</div>
+      <div style="margin-top:6px;"><span class="pct-badge" id="pct">0%</span></div>
     </div>
   </div>
-
-  <!-- Controls -->
-  <div class="controls">
-    <div class="search-row">
-      <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input type="number" id="search-input" placeholder="Buscar lámina..." min="1" max="670" inputmode="numeric" />
-      </div>
-      <button class="clear-btn" onclick="clearSearch()">Limpiar</button>
-    </div>
-    <div class="filters">
-      <button class="filter-btn f-all active" onclick="setFilter('all')">Todas</button>
-      <button class="filter-btn f-tengo" onclick="setFilter('tengo')">Tengo</button>
-      <button class="filter-btn f-faltan" onclick="setFilter('faltan')">Faltan</button>
-      <button class="filter-btn f-rep" onclick="setFilter('rep')">Repetidas</button>
-    </div>
-  </div>
-
-  <!-- Legend -->
-  <div class="legend">
-    <div class="leg"><div class="leg-dot" style="background:var(--surface2);border:0.5px solid var(--border2)"></div>Falta</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--green-bg);border:0.5px solid var(--green-border)"></div>Tengo (1)</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--amber-bg);border:0.5px solid var(--amber-border)"></div>Repetida (2+)</div>
-  </div>
-
-  <!-- Count -->
-  <div class="count-bar" id="count-bar">670 láminas</div>
-
-  <!-- Grid -->
-  <div class="grid-wrap">
-    <div class="grid" id="grid"></div>
-  </div>
-
-  <!-- Bottom actions -->
-  <div class="bottom-actions">
-    <button class="action-btn" onclick="openModal('faltan')">📋 Faltantes</button>
-    <button class="action-btn" onclick="openModal('rep')">🔄 Repetidas</button>
-    <button class="action-btn danger" onclick="resetAll()">↺ Reiniciar</button>
+  <div class="prog-track"><div class="prog-fill" id="pf" style="width:0%"></div></div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-n w" id="s-tot">992</div><div class="stat-l">Total</div></div>
+    <div class="stat"><div class="stat-n g" id="s-hv">0</div><div class="stat-l">Tengo</div></div>
+    <div class="stat"><div class="stat-n r" id="s-ms">992</div><div class="stat-l">Faltan</div></div>
+    <div class="stat"><div class="stat-n a" id="s-rp">0</div><div class="stat-l">Repetidas</div></div>
   </div>
 </div>
 
+<!-- Controls -->
+<div class="ctrl">
+  <div class="row">
+    <div class="sw"><span class="si">🔍</span><input type="text" id="srch" placeholder="Buscar: MEX2, Messi, Brasil..." autocomplete="off" autocorrect="off" spellcheck="false"/></div>
+    <button class="clr" onclick="clearSearch()">✕</button>
+  </div>
+  <div class="row">
+    <select class="team-sel" id="team-sel" onchange="setTeam(this.value)">
+      <option value="all">Todos los equipos</option>
+    </select>
+    <div class="filters">
+      <button class="fb fa on" id="f-all" onclick="setFilter('all')">Todas</button>
+      <button class="fb ft" id="f-tengo" onclick="setFilter('tengo')">Tengo</button>
+      <button class="fb ff" id="f-faltan" onclick="setFilter('faltan')">Faltan</button>
+      <button class="fb fr" id="f-rep" onclick="setFilter('rep')">Rep.</button>
+    </div>
+  </div>
+</div>
+
+<!-- Legend -->
+<div class="leg-bar">
+  <div class="leg"><div class="ldot" style="background:var(--s3);border:0.5px solid var(--bd2)"></div>Falta</div>
+  <div class="leg"><div class="ldot" style="background:var(--gbg);border:0.5px solid var(--gbr)"></div>Tengo</div>
+  <div class="leg"><div class="ldot" style="background:var(--abg);border:0.5px solid var(--abr)"></div>Repetida</div>
+  <div class="leg"><div class="ldot" style="background:var(--s3);border:0.5px solid var(--foil);box-shadow:0 0 4px rgba(245,224,112,0.4)"></div>FOIL ★</div>
+</div>
+<div class="cbar" id="cbar">992 láminas</div>
+
+<!-- Grid -->
+<div class="gwrap" id="gwrap"></div>
+
+<!-- Bottom -->
+<div class="bbar">
+  <button class="abt" onclick="openModal('f')">📋 Faltantes</button>
+  <button class="abt" onclick="openModal('r')">🔄 Repetidas</button>
+  <button class="abt dng" onclick="resetAll()">↺ Reiniciar</button>
+</div>
+</div>
+
 <!-- Modal -->
-<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+<div class="modal-ov" id="modal" onclick="closeModal(event)">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" id="modal-title"></div>
-      <div class="modal-close" onclick="closeModal()">×</div>
-    </div>
-    <div class="modal-body">
-      <div class="tag-grid" id="modal-body"></div>
-    </div>
+    <div class="mhdr"><div class="mtitle" id="mtitle"></div><div class="mclose" onclick="closeModal()">×</div></div>
+    <div class="mbody"><div class="tgrid" id="mbody"></div></div>
   </div>
 </div>
 
 <script>
-const TOTAL = 670;
-let stickers = {};
-let filter = 'all';
-let search = '';
+const SECTIONS = [{"code":"FWC","name":"Mundial 2026","stickers":[{"id":"00","n":"Logo Panini","f":true},{"id":"FWC1","n":"Escudo Oficial","f":true},{"id":"FWC2","n":"Escudo Oficial","f":true},{"id":"FWC3","n":"Mascotas Oficiales","f":true},{"id":"FWC4","n":"Slogan Oficial","f":true},{"id":"FWC5","n":"Balón Oficial","f":true},{"id":"FWC6","n":"Canadá - Sedes","f":true},{"id":"FWC7","n":"México - Sedes","f":true},{"id":"FWC8","n":"USA - Sedes","f":true},{"id":"FWC9","n":"Italia 1934","f":true},{"id":"FWC10","n":"Uruguay 1950","f":true},{"id":"FWC11","n":"Alemania Occ. 1954","f":true},{"id":"FWC12","n":"Brasil 1962","f":true},{"id":"FWC13","n":"Alemania Occ. 1974","f":true},{"id":"FWC14","n":"Argentina 1986","f":true},{"id":"FWC15","n":"Brasil 1994","f":true},{"id":"FWC16","n":"Brasil 2002","f":true},{"id":"FWC17","n":"Italia 2006","f":true},{"id":"FWC18","n":"Alemania 2014","f":true},{"id":"FWC19","n":"Argentina 2022","f":true}]},{"code":"MEX","name":"México","stickers":[{"id":"MEX1","n":"Escudo","f":true},{"id":"MEX2","n":"Luis Malagón","f":false},{"id":"MEX3","n":"Johan Vasquez","f":false},{"id":"MEX4","n":"Jorge Sánchez","f":false},{"id":"MEX5","n":"Cesar Montes","f":false},{"id":"MEX6","n":"Jesus Gallardo","f":false},{"id":"MEX7","n":"Israel Reyes","f":false},{"id":"MEX8","n":"Diego Lainez","f":false},{"id":"MEX9","n":"Carlos Rodriguez","f":false},{"id":"MEX10","n":"Edson Alvarez","f":false},{"id":"MEX11","n":"Orbelin Pineda","f":false},{"id":"MEX12","n":"Marcel Ruiz","f":false},{"id":"MEX13","n":"Foto Equipo","f":false},{"id":"MEX14","n":"Érick Sánchez","f":false},{"id":"MEX15","n":"Hirving Lozano","f":false},{"id":"MEX16","n":"Santiago Giménez","f":false},{"id":"MEX17","n":"Raúl Jiménez","f":false},{"id":"MEX18","n":"Alexis Vega","f":false},{"id":"MEX19","n":"Roberto Alvarado","f":false},{"id":"MEX20","n":"Cesar Huerta","f":false}]},{"code":"RSA","name":"Sudáfrica","stickers":[{"id":"RSA1","n":"Escudo","f":true},{"id":"RSA2","n":"Ronwen Williams","f":false},{"id":"RSA3","n":"Sipho Chaine","f":false},{"id":"RSA4","n":"Aubrey Modiba","f":false},{"id":"RSA5","n":"Samukele Kabini","f":false},{"id":"RSA6","n":"Mbekezeli Mbokazi","f":false},{"id":"RSA7","n":"Khulumani Ndamane","f":false},{"id":"RSA8","n":"Siyabonga Ngezana","f":false},{"id":"RSA9","n":"Khuliso Mudau","f":false},{"id":"RSA10","n":"Nkosinathi Sibisi","f":false},{"id":"RSA11","n":"Teboho Mokoena","f":false},{"id":"RSA12","n":"Thalente Mbatha","f":false},{"id":"RSA13","n":"Foto Equipo","f":false},{"id":"RSA14","n":"Bathasi Aubaas","f":false},{"id":"RSA15","n":"Yaya Sithole","f":false},{"id":"RSA16","n":"Sipho Mbule","f":false},{"id":"RSA17","n":"Lyle Foster","f":false},{"id":"RSA18","n":"Iqraam Rayners","f":false},{"id":"RSA19","n":"Mohau Nkota","f":false},{"id":"RSA20","n":"Oswin Appollis","f":false}]},{"code":"KOR","name":"Corea del Sur","stickers":[{"id":"KOR1","n":"Escudo","f":true},{"id":"KOR2","n":"Hyeon-woo Jo","f":false},{"id":"KOR3","n":"Seung-Gyu Kim","f":false},{"id":"KOR4","n":"Min-jae Kim","f":false},{"id":"KOR5","n":"Yu-min Cho","f":false},{"id":"KOR6","n":"Young-woo Seol","f":false},{"id":"KOR7","n":"Han-beom Lee","f":false},{"id":"KOR8","n":"Tae-seok Lee","f":false},{"id":"KOR9","n":"Myung-jae Lee","f":false},{"id":"KOR10","n":"Jae-sung Lee","f":false},{"id":"KOR11","n":"In-beom Hwang","f":false},{"id":"KOR12","n":"Kang-in Lee","f":false},{"id":"KOR13","n":"Foto Equipo","f":false},{"id":"KOR14","n":"Seung-ho Paik","f":false},{"id":"KOR15","n":"Jens Castrop","f":false},{"id":"KOR16","n":"Dongg-yeong Lee","f":false},{"id":"KOR17","n":"Gue-sung Cho","f":false},{"id":"KOR18","n":"Heung-min Son","f":false},{"id":"KOR19","n":"Hee-chan Hwang","f":false},{"id":"KOR20","n":"Hyeon-Gyu Oh","f":false}]},{"code":"CZE","name":"Chequia","stickers":[{"id":"CZE1","n":"Escudo","f":true},{"id":"CZE2","n":"Matej Kovar","f":false},{"id":"CZE3","n":"Jindrich Stanek","f":false},{"id":"CZE4","n":"Ladislav Krejci","f":false},{"id":"CZE5","n":"Vladimir Coufal","f":false},{"id":"CZE6","n":"Jaroslav Zeleny","f":false},{"id":"CZE7","n":"Tomas Holes","f":false},{"id":"CZE8","n":"David Zima","f":false},{"id":"CZE9","n":"Michal Sadilek","f":false},{"id":"CZE10","n":"Lukas Provod","f":false},{"id":"CZE11","n":"Lukas Cerv","f":false},{"id":"CZE12","n":"Tomas Soucek","f":false},{"id":"CZE13","n":"Foto Equipo","f":false},{"id":"CZE14","n":"Pavel Sulc","f":false},{"id":"CZE15","n":"Matej Vydra","f":false},{"id":"CZE16","n":"Vasil Kusej","f":false},{"id":"CZE17","n":"Tomas Chory","f":false},{"id":"CZE18","n":"Vaclav Cerny","f":false},{"id":"CZE19","n":"Adam Hlozek","f":false},{"id":"CZE20","n":"Patrik Schick","f":false}]},{"code":"CAN","name":"Canadá","stickers":[{"id":"CAN1","n":"Escudo","f":true},{"id":"CAN2","n":"Dayne St.Clair","f":false},{"id":"CAN3","n":"Alphonso Davies","f":false},{"id":"CAN4","n":"Alistair Johnston","f":false},{"id":"CAN5","n":"Samuel Adekugbe","f":false},{"id":"CAN6","n":"Riche Larvea","f":false},{"id":"CAN7","n":"Derek Cornelius","f":false},{"id":"CAN8","n":"Moïse Bombito","f":false},{"id":"CAN9","n":"Kamal Miller","f":false},{"id":"CAN10","n":"Stephen Eustáquio","f":false},{"id":"CAN11","n":"Ismaël Koné","f":false},{"id":"CAN12","n":"Jonathan Osorio","f":false},{"id":"CAN13","n":"Foto Equipo","f":false},{"id":"CAN14","n":"Jacob Shaffelburg","f":false},{"id":"CAN15","n":"Mathieu Choinière","f":false},{"id":"CAN16","n":"Niko Sigur","f":false},{"id":"CAN17","n":"Tajon Buchanan","f":false},{"id":"CAN18","n":"Liam Millar","f":false},{"id":"CAN19","n":"Cyle Larin","f":false},{"id":"CAN20","n":"Jonathan David","f":false}]},{"code":"BIH","name":"Bosnia y Herzegovina","stickers":[{"id":"BIH1","n":"Escudo","f":true},{"id":"BIH2","n":"Nikola Vasilj","f":false},{"id":"BIH3","n":"Amer Dedic","f":false},{"id":"BIH4","n":"Sead Kolasinac","f":false},{"id":"BIH5","n":"Tarik Muharemovic","f":false},{"id":"BIH6","n":"Nihad Mujakic","f":false},{"id":"BIH7","n":"Nikola Katic","f":false},{"id":"BIH8","n":"Amir Hadziahmetovic","f":false},{"id":"BIH9","n":"Benjamin Tahirovic","f":false},{"id":"BIH10","n":"Armin Gigovic","f":false},{"id":"BIH11","n":"Ivan Sunjic","f":false},{"id":"BIH12","n":"Ivan Basic","f":false},{"id":"BIH13","n":"Foto Equipo","f":false},{"id":"BIH14","n":"Dzenis Burnic","f":false},{"id":"BIH15","n":"Esmir Bajraktarevic","f":false},{"id":"BIH16","n":"Amar Memic","f":false},{"id":"BIH17","n":"Ermedin Demirovic","f":false},{"id":"BIH18","n":"Edin Dzeko","f":false},{"id":"BIH19","n":"Samed Bazdar","f":false},{"id":"BIH20","n":"Haris Tabakovic","f":false}]},{"code":"QAT","name":"Qatar","stickers":[{"id":"QAT1","n":"Escudo","f":true},{"id":"QAT2","n":"Meshaal Barsham","f":false},{"id":"QAT3","n":"Sultan Albrake","f":false},{"id":"QAT4","n":"Lucas Mendes","f":false},{"id":"QAT5","n":"Homam Ahmed","f":false},{"id":"QAT6","n":"Boualem Khoukhi","f":false},{"id":"QAT7","n":"Pedro Miguel","f":false},{"id":"QAT8","n":"Tarek Salman","f":false},{"id":"QAT9","n":"Mohamed Al-Mannai","f":false},{"id":"QAT10","n":"Karim Boudiaf","f":false},{"id":"QAT11","n":"Assim Madibo","f":false},{"id":"QAT12","n":"Ahmed Fatehi","f":false},{"id":"QAT13","n":"Foto Equipo","f":false},{"id":"QAT14","n":"Mohammed Waad","f":false},{"id":"QAT15","n":"Abdulaziz Hatem","f":false},{"id":"QAT16","n":"Hassan Al-Haydos","f":false},{"id":"QAT17","n":"Edmilson Junior","f":false},{"id":"QAT18","n":"Akram Hassan Afif","f":false},{"id":"QAT19","n":"Ahmed Al Ganehi","f":false},{"id":"QAT20","n":"Almoez Ali","f":false}]},{"code":"SUI","name":"Suiza","stickers":[{"id":"SUI1","n":"Escudo","f":true},{"id":"SUI2","n":"Gregor Kobel","f":false},{"id":"SUI3","n":"Yvon Mvogo","f":false},{"id":"SUI4","n":"Manuel Akanji","f":false},{"id":"SUI5","n":"Ricardo Rodriguez","f":false},{"id":"SUI6","n":"Nico Elvedi","f":false},{"id":"SUI7","n":"Aurèle Amenda","f":false},{"id":"SUI8","n":"Silvan Widmer","f":false},{"id":"SUI9","n":"Granit Xhaka","f":false},{"id":"SUI10","n":"Denis Zakaria","f":false},{"id":"SUI11","n":"Remo Freuler","f":false},{"id":"SUI12","n":"Fabian Rieder","f":false},{"id":"SUI13","n":"Foto Equipo","f":false},{"id":"SUI14","n":"Ardon Jashari","f":false},{"id":"SUI15","n":"Johan Manzambi","f":false},{"id":"SUI16","n":"Michel Aebischer","f":false},{"id":"SUI17","n":"Breel Embolo","f":false},{"id":"SUI18","n":"Ruben Vargas","f":false},{"id":"SUI19","n":"Dan Ndoye","f":false},{"id":"SUI20","n":"Zeki Amdouni","f":false}]},{"code":"BRA","name":"Brasil","stickers":[{"id":"BRA1","n":"Escudo","f":true},{"id":"BRA2","n":"Alisson","f":false},{"id":"BRA3","n":"Bento","f":false},{"id":"BRA4","n":"Marquinhos","f":false},{"id":"BRA5","n":"Éder Militão","f":false},{"id":"BRA6","n":"Gabriel Magalhães","f":false},{"id":"BRA7","n":"Danilo","f":false},{"id":"BRA8","n":"Wesley","f":false},{"id":"BRA9","n":"Lucas Paquetá","f":false},{"id":"BRA10","n":"Casemiro","f":false},{"id":"BRA11","n":"Bruno Guimarães","f":false},{"id":"BRA12","n":"Luiz Henrique","f":false},{"id":"BRA13","n":"Foto Equipo","f":false},{"id":"BRA14","n":"Vinicius Júnior","f":false},{"id":"BRA15","n":"Rodrygo","f":false},{"id":"BRA16","n":"João Pedro","f":false},{"id":"BRA17","n":"Matheus Cunha","f":false},{"id":"BRA18","n":"Gabriel Martinelli","f":false},{"id":"BRA19","n":"Raphinha","f":false},{"id":"BRA20","n":"Estévão","f":false}]},{"code":"MAR","name":"Marruecos","stickers":[{"id":"MAR1","n":"Escudo","f":true},{"id":"MAR2","n":"Yassine Bounou","f":false},{"id":"MAR3","n":"Munir El Kajoui","f":false},{"id":"MAR4","n":"Achraf Hakimi","f":false},{"id":"MAR5","n":"Noussair Mazraoui","f":false},{"id":"MAR6","n":"Nayef Aguerd","f":false},{"id":"MAR7","n":"Romain Saiss","f":false},{"id":"MAR8","n":"Jawad El Yamiq","f":false},{"id":"MAR9","n":"Adam Masina","f":false},{"id":"MAR10","n":"Sofyan Amrabat","f":false},{"id":"MAR11","n":"Azzedine Ounahi","f":false},{"id":"MAR12","n":"Eliesse Ben Seghir","f":false},{"id":"MAR13","n":"Foto Equipo","f":false},{"id":"MAR14","n":"Bilal El Khannouss","f":false},{"id":"MAR15","n":"Ismael Saibari","f":false},{"id":"MAR16","n":"Youssef En-Nesyri","f":false},{"id":"MAR17","n":"Abde Ezzalzouli","f":false},{"id":"MAR18","n":"Soufiane Rahimi","f":false},{"id":"MAR19","n":"Brahim Diaz","f":false},{"id":"MAR20","n":"Ayoub El Kaabi","f":false}]},{"code":"HAI","name":"Haití","stickers":[{"id":"HAI1","n":"Escudo","f":true},{"id":"HAI2","n":"Johny Placide","f":false},{"id":"HAI3","n":"Carlens Arcus","f":false},{"id":"HAI4","n":"Martin Expérience","f":false},{"id":"HAI5","n":"Jean-Kevin Duverne","f":false},{"id":"HAI6","n":"Ricardo Adé","f":false},{"id":"HAI7","n":"Duke Lacroix","f":false},{"id":"HAI8","n":"Garven Metusala","f":false},{"id":"HAI9","n":"Hannes Delcroix","f":false},{"id":"HAI10","n":"Leverton Pierre","f":false},{"id":"HAI11","n":"Danley Jean Jacques","f":false},{"id":"HAI12","n":"Jean-Ricner Bellegarde","f":false},{"id":"HAI13","n":"Foto Equipo","f":false},{"id":"HAI14","n":"Christopher Attys","f":false},{"id":"HAI15","n":"Derrick Etienne Jr","f":false},{"id":"HAI16","n":"Josue Casimir","f":false},{"id":"HAI17","n":"Ruben Providence","f":false},{"id":"HAI18","n":"Duckens Nazon","f":false},{"id":"HAI19","n":"Louicius Deedson","f":false},{"id":"HAI20","n":"Frantzdy Pierrot","f":false}]},{"code":"SCO","name":"Escocia","stickers":[{"id":"SCO1","n":"Escudo","f":true},{"id":"SCO2","n":"Angus Gunn","f":false},{"id":"SCO3","n":"Jack Hendry","f":false},{"id":"SCO4","n":"Kieran Tierney","f":false},{"id":"SCO5","n":"Aaron Hickey","f":false},{"id":"SCO6","n":"Andrew Robertson","f":false},{"id":"SCO7","n":"Scott McKenna","f":false},{"id":"SCO8","n":"John Souttar","f":false},{"id":"SCO9","n":"Anthony Ralston","f":false},{"id":"SCO10","n":"Grant Hanley","f":false},{"id":"SCO11","n":"Scott McTominay","f":false},{"id":"SCO12","n":"Billy Gilmour","f":false},{"id":"SCO13","n":"Foto Equipo","f":false},{"id":"SCO14","n":"Lewis Ferguson","f":false},{"id":"SCO15","n":"Ryan Christie","f":false},{"id":"SCO16","n":"Kenny McLean","f":false},{"id":"SCO17","n":"John McGinn","f":false},{"id":"SCO18","n":"Lyndon Dykes","f":false},{"id":"SCO19","n":"Che Adams","f":false},{"id":"SCO20","n":"Ben Doak","f":false}]},{"code":"USA","name":"Estados Unidos","stickers":[{"id":"USA1","n":"Escudo","f":true},{"id":"USA2","n":"Matt Freese","f":false},{"id":"USA3","n":"Chris Richards","f":false},{"id":"USA4","n":"Tim Ream","f":false},{"id":"USA5","n":"Mark McKenzie","f":false},{"id":"USA6","n":"Alex Freeman","f":false},{"id":"USA7","n":"Antonee Robinson","f":false},{"id":"USA8","n":"Tyler Adams","f":false},{"id":"USA9","n":"Tanner Tessmann","f":false},{"id":"USA10","n":"Weston McKennie","f":false},{"id":"USA11","n":"Christian Roldan","f":false},{"id":"USA12","n":"Timothy Weah","f":false},{"id":"USA13","n":"Foto Equipo","f":false},{"id":"USA14","n":"Diego Luna","f":false},{"id":"USA15","n":"Malik Tillman","f":false},{"id":"USA16","n":"Christian Pulisic","f":false},{"id":"USA17","n":"Brenden Aaronson","f":false},{"id":"USA18","n":"Ricardo Pepi","f":false},{"id":"USA19","n":"Haji Wright","f":false},{"id":"USA20","n":"Folarin Balogun","f":false}]},{"code":"PAR","name":"Paraguay","stickers":[{"id":"PAR1","n":"Escudo","f":true},{"id":"PAR2","n":"Roberto Fernandez","f":false},{"id":"PAR3","n":"Orlando Gill","f":false},{"id":"PAR4","n":"Gustavo Gomez","f":false},{"id":"PAR5","n":"Fabián Balbuena","f":false},{"id":"PAR6","n":"Juan José Cáceres","f":false},{"id":"PAR7","n":"Omar Alderete","f":false},{"id":"PAR8","n":"Junior Alonso","f":false},{"id":"PAR9","n":"Mathías Villasanti","f":false},{"id":"PAR10","n":"Diego Gomez","f":false},{"id":"PAR11","n":"Damián Bobadilla","f":false},{"id":"PAR12","n":"Andres Cubas","f":false},{"id":"PAR13","n":"Foto Equipo","f":false},{"id":"PAR14","n":"Matias Galarza","f":false},{"id":"PAR15","n":"Julio Enciso","f":false},{"id":"PAR16","n":"Alejandro Romero","f":false},{"id":"PAR17","n":"Miguel Almirón","f":false},{"id":"PAR18","n":"Ramon Sosa","f":false},{"id":"PAR19","n":"Angel Romero","f":false},{"id":"PAR20","n":"Antonio Sanabria","f":false}]},{"code":"AUS","name":"Australia","stickers":[{"id":"AUS1","n":"Escudo","f":true},{"id":"AUS2","n":"Mathew Ryan","f":false},{"id":"AUS3","n":"Joe Gauci","f":false},{"id":"AUS4","n":"Harry Souttar","f":false},{"id":"AUS5","n":"Alessandro Circati","f":false},{"id":"AUS6","n":"Jordan Bos","f":false},{"id":"AUS7","n":"Aziz Behich","f":false},{"id":"AUS8","n":"Cameron Burgess","f":false},{"id":"AUS9","n":"Lewis Miller","f":false},{"id":"AUS10","n":"Milos Degenek","f":false},{"id":"AUS11","n":"Jackson Irvine","f":false},{"id":"AUS12","n":"Riley McGree","f":false},{"id":"AUS13","n":"Foto Equipo","f":false},{"id":"AUS14","n":"Aiden O'Neill","f":false},{"id":"AUS15","n":"Connor Metcalfe","f":false},{"id":"AUS16","n":"Patrick Yazbek","f":false},{"id":"AUS17","n":"Craig Goodwin","f":false},{"id":"AUS18","n":"Kusini Yengi","f":false},{"id":"AUS19","n":"Nestory Irankunda","f":false},{"id":"AUS20","n":"Mohamed Touré","f":false}]},{"code":"TUR","name":"Türkiye","stickers":[{"id":"TUR1","n":"Escudo","f":true},{"id":"TUR2","n":"Jugador","f":false},{"id":"TUR3","n":"Jugador","f":false},{"id":"TUR4","n":"Jugador","f":false},{"id":"TUR5","n":"Jugador","f":false},{"id":"TUR6","n":"Jugador","f":false},{"id":"TUR7","n":"Jugador","f":false},{"id":"TUR8","n":"Jugador","f":false},{"id":"TUR9","n":"Jugador","f":false},{"id":"TUR10","n":"Jugador","f":false},{"id":"TUR11","n":"Jugador","f":false},{"id":"TUR12","n":"Jugador","f":false},{"id":"TUR13","n":"Foto Equipo","f":false},{"id":"TUR14","n":"Jugador","f":false},{"id":"TUR15","n":"Jugador","f":false},{"id":"TUR16","n":"Jugador","f":false},{"id":"TUR17","n":"Jugador","f":false},{"id":"TUR18","n":"Jugador","f":false},{"id":"TUR19","n":"Jugador","f":false},{"id":"TUR20","n":"Jugador","f":false}]},{"code":"ALG","name":"Argelia","stickers":[{"id":"ALG1","n":"Escudo","f":true},{"id":"ALG2","n":"Jugador","f":false},{"id":"ALG3","n":"Jugador","f":false},{"id":"ALG4","n":"Jugador","f":false},{"id":"ALG5","n":"Jugador","f":false},{"id":"ALG6","n":"Jugador","f":false},{"id":"ALG7","n":"Jugador","f":false},{"id":"ALG8","n":"Jugador","f":false},{"id":"ALG9","n":"Jugador","f":false},{"id":"ALG10","n":"Jugador","f":false},{"id":"ALG11","n":"Jugador","f":false},{"id":"ALG12","n":"Jugador","f":false},{"id":"ALG13","n":"Foto Equipo","f":false},{"id":"ALG14","n":"Jugador","f":false},{"id":"ALG15","n":"Jugador","f":false},{"id":"ALG16","n":"Jugador","f":false},{"id":"ALG17","n":"Jugador","f":false},{"id":"ALG18","n":"Jugador","f":false},{"id":"ALG19","n":"Jugador","f":false},{"id":"ALG20","n":"Jugador","f":false}]},{"code":"ARG","name":"Argentina","stickers":[{"id":"ARG1","n":"Escudo","f":true},{"id":"ARG2","n":"Jugador","f":false},{"id":"ARG3","n":"Jugador","f":false},{"id":"ARG4","n":"Jugador","f":false},{"id":"ARG5","n":"Jugador","f":false},{"id":"ARG6","n":"Jugador","f":false},{"id":"ARG7","n":"Jugador","f":false},{"id":"ARG8","n":"Jugador","f":false},{"id":"ARG9","n":"Jugador","f":false},{"id":"ARG10","n":"Jugador","f":false},{"id":"ARG11","n":"Jugador","f":false},{"id":"ARG12","n":"Jugador","f":false},{"id":"ARG13","n":"Foto Equipo","f":false},{"id":"ARG14","n":"Jugador","f":false},{"id":"ARG15","n":"Jugador","f":false},{"id":"ARG16","n":"Jugador","f":false},{"id":"ARG17","n":"Jugador","f":false},{"id":"ARG18","n":"Jugador","f":false},{"id":"ARG19","n":"Jugador","f":false},{"id":"ARG20","n":"Jugador","f":false}]},{"code":"AUT","name":"Austria","stickers":[{"id":"AUT1","n":"Escudo","f":true},{"id":"AUT2","n":"Jugador","f":false},{"id":"AUT3","n":"Jugador","f":false},{"id":"AUT4","n":"Jugador","f":false},{"id":"AUT5","n":"Jugador","f":false},{"id":"AUT6","n":"Jugador","f":false},{"id":"AUT7","n":"Jugador","f":false},{"id":"AUT8","n":"Jugador","f":false},{"id":"AUT9","n":"Jugador","f":false},{"id":"AUT10","n":"Jugador","f":false},{"id":"AUT11","n":"Jugador","f":false},{"id":"AUT12","n":"Jugador","f":false},{"id":"AUT13","n":"Foto Equipo","f":false},{"id":"AUT14","n":"Jugador","f":false},{"id":"AUT15","n":"Jugador","f":false},{"id":"AUT16","n":"Jugador","f":false},{"id":"AUT17","n":"Jugador","f":false},{"id":"AUT18","n":"Jugador","f":false},{"id":"AUT19","n":"Jugador","f":false},{"id":"AUT20","n":"Jugador","f":false}]},{"code":"BEL","name":"Bélgica","stickers":[{"id":"BEL1","n":"Escudo","f":true},{"id":"BEL2","n":"Jugador","f":false},{"id":"BEL3","n":"Jugador","f":false},{"id":"BEL4","n":"Jugador","f":false},{"id":"BEL5","n":"Jugador","f":false},{"id":"BEL6","n":"Jugador","f":false},{"id":"BEL7","n":"Jugador","f":false},{"id":"BEL8","n":"Jugador","f":false},{"id":"BEL9","n":"Jugador","f":false},{"id":"BEL10","n":"Jugador","f":false},{"id":"BEL11","n":"Jugador","f":false},{"id":"BEL12","n":"Jugador","f":false},{"id":"BEL13","n":"Foto Equipo","f":false},{"id":"BEL14","n":"Jugador","f":false},{"id":"BEL15","n":"Jugador","f":false},{"id":"BEL16","n":"Jugador","f":false},{"id":"BEL17","n":"Jugador","f":false},{"id":"BEL18","n":"Jugador","f":false},{"id":"BEL19","n":"Jugador","f":false},{"id":"BEL20","n":"Jugador","f":false}]},{"code":"CPV","name":"Cabo Verde","stickers":[{"id":"CPV1","n":"Escudo","f":true},{"id":"CPV2","n":"Jugador","f":false},{"id":"CPV3","n":"Jugador","f":false},{"id":"CPV4","n":"Jugador","f":false},{"id":"CPV5","n":"Jugador","f":false},{"id":"CPV6","n":"Jugador","f":false},{"id":"CPV7","n":"Jugador","f":false},{"id":"CPV8","n":"Jugador","f":false},{"id":"CPV9","n":"Jugador","f":false},{"id":"CPV10","n":"Jugador","f":false},{"id":"CPV11","n":"Jugador","f":false},{"id":"CPV12","n":"Jugador","f":false},{"id":"CPV13","n":"Foto Equipo","f":false},{"id":"CPV14","n":"Jugador","f":false},{"id":"CPV15","n":"Jugador","f":false},{"id":"CPV16","n":"Jugador","f":false},{"id":"CPV17","n":"Jugador","f":false},{"id":"CPV18","n":"Jugador","f":false},{"id":"CPV19","n":"Jugador","f":false},{"id":"CPV20","n":"Jugador","f":false}]},{"code":"COL","name":"Colombia","stickers":[{"id":"COL1","n":"Escudo","f":true},{"id":"COL2","n":"Jugador","f":false},{"id":"COL3","n":"Jugador","f":false},{"id":"COL4","n":"Jugador","f":false},{"id":"COL5","n":"Jugador","f":false},{"id":"COL6","n":"Jugador","f":false},{"id":"COL7","n":"Jugador","f":false},{"id":"COL8","n":"Jugador","f":false},{"id":"COL9","n":"Jugador","f":false},{"id":"COL10","n":"Jugador","f":false},{"id":"COL11","n":"Jugador","f":false},{"id":"COL12","n":"Jugador","f":false},{"id":"COL13","n":"Foto Equipo","f":false},{"id":"COL14","n":"Jugador","f":false},{"id":"COL15","n":"Jugador","f":false},{"id":"COL16","n":"Jugador","f":false},{"id":"COL17","n":"Jugador","f":false},{"id":"COL18","n":"Jugador","f":false},{"id":"COL19","n":"Jugador","f":false},{"id":"COL20","n":"Jugador","f":false}]},{"code":"COD","name":"Congo RD","stickers":[{"id":"COD1","n":"Escudo","f":true},{"id":"COD2","n":"Jugador","f":false},{"id":"COD3","n":"Jugador","f":false},{"id":"COD4","n":"Jugador","f":false},{"id":"COD5","n":"Jugador","f":false},{"id":"COD6","n":"Jugador","f":false},{"id":"COD7","n":"Jugador","f":false},{"id":"COD8","n":"Jugador","f":false},{"id":"COD9","n":"Jugador","f":false},{"id":"COD10","n":"Jugador","f":false},{"id":"COD11","n":"Jugador","f":false},{"id":"COD12","n":"Jugador","f":false},{"id":"COD13","n":"Foto Equipo","f":false},{"id":"COD14","n":"Jugador","f":false},{"id":"COD15","n":"Jugador","f":false},{"id":"COD16","n":"Jugador","f":false},{"id":"COD17","n":"Jugador","f":false},{"id":"COD18","n":"Jugador","f":false},{"id":"COD19","n":"Jugador","f":false},{"id":"COD20","n":"Jugador","f":false}]},{"code":"CRO","name":"Croacia","stickers":[{"id":"CRO1","n":"Escudo","f":true},{"id":"CRO2","n":"Jugador","f":false},{"id":"CRO3","n":"Jugador","f":false},{"id":"CRO4","n":"Jugador","f":false},{"id":"CRO5","n":"Jugador","f":false},{"id":"CRO6","n":"Jugador","f":false},{"id":"CRO7","n":"Jugador","f":false},{"id":"CRO8","n":"Jugador","f":false},{"id":"CRO9","n":"Jugador","f":false},{"id":"CRO10","n":"Jugador","f":false},{"id":"CRO11","n":"Jugador","f":false},{"id":"CRO12","n":"Jugador","f":false},{"id":"CRO13","n":"Foto Equipo","f":false},{"id":"CRO14","n":"Jugador","f":false},{"id":"CRO15","n":"Jugador","f":false},{"id":"CRO16","n":"Jugador","f":false},{"id":"CRO17","n":"Jugador","f":false},{"id":"CRO18","n":"Jugador","f":false},{"id":"CRO19","n":"Jugador","f":false},{"id":"CRO20","n":"Jugador","f":false}]},{"code":"CUW","name":"Curazao","stickers":[{"id":"CUW1","n":"Escudo","f":true},{"id":"CUW2","n":"Jugador","f":false},{"id":"CUW3","n":"Jugador","f":false},{"id":"CUW4","n":"Jugador","f":false},{"id":"CUW5","n":"Jugador","f":false},{"id":"CUW6","n":"Jugador","f":false},{"id":"CUW7","n":"Jugador","f":false},{"id":"CUW8","n":"Jugador","f":false},{"id":"CUW9","n":"Jugador","f":false},{"id":"CUW10","n":"Jugador","f":false},{"id":"CUW11","n":"Jugador","f":false},{"id":"CUW12","n":"Jugador","f":false},{"id":"CUW13","n":"Foto Equipo","f":false},{"id":"CUW14","n":"Jugador","f":false},{"id":"CUW15","n":"Jugador","f":false},{"id":"CUW16","n":"Jugador","f":false},{"id":"CUW17","n":"Jugador","f":false},{"id":"CUW18","n":"Jugador","f":false},{"id":"CUW19","n":"Jugador","f":false},{"id":"CUW20","n":"Jugador","f":false}]},{"code":"ECU","name":"Ecuador","stickers":[{"id":"ECU1","n":"Escudo","f":true},{"id":"ECU2","n":"Jugador","f":false},{"id":"ECU3","n":"Jugador","f":false},{"id":"ECU4","n":"Jugador","f":false},{"id":"ECU5","n":"Jugador","f":false},{"id":"ECU6","n":"Jugador","f":false},{"id":"ECU7","n":"Jugador","f":false},{"id":"ECU8","n":"Jugador","f":false},{"id":"ECU9","n":"Jugador","f":false},{"id":"ECU10","n":"Jugador","f":false},{"id":"ECU11","n":"Jugador","f":false},{"id":"ECU12","n":"Jugador","f":false},{"id":"ECU13","n":"Foto Equipo","f":false},{"id":"ECU14","n":"Jugador","f":false},{"id":"ECU15","n":"Jugador","f":false},{"id":"ECU16","n":"Jugador","f":false},{"id":"ECU17","n":"Jugador","f":false},{"id":"ECU18","n":"Jugador","f":false},{"id":"ECU19","n":"Jugador","f":false},{"id":"ECU20","n":"Jugador","f":false}]},{"code":"EGY","name":"Egipto","stickers":[{"id":"EGY1","n":"Escudo","f":true},{"id":"EGY2","n":"Jugador","f":false},{"id":"EGY3","n":"Jugador","f":false},{"id":"EGY4","n":"Jugador","f":false},{"id":"EGY5","n":"Jugador","f":false},{"id":"EGY6","n":"Jugador","f":false},{"id":"EGY7","n":"Jugador","f":false},{"id":"EGY8","n":"Jugador","f":false},{"id":"EGY9","n":"Jugador","f":false},{"id":"EGY10","n":"Jugador","f":false},{"id":"EGY11","n":"Jugador","f":false},{"id":"EGY12","n":"Jugador","f":false},{"id":"EGY13","n":"Foto Equipo","f":false},{"id":"EGY14","n":"Jugador","f":false},{"id":"EGY15","n":"Jugador","f":false},{"id":"EGY16","n":"Jugador","f":false},{"id":"EGY17","n":"Jugador","f":false},{"id":"EGY18","n":"Jugador","f":false},{"id":"EGY19","n":"Jugador","f":false},{"id":"EGY20","n":"Jugador","f":false}]},{"code":"ENG","name":"Inglaterra","stickers":[{"id":"ENG1","n":"Escudo","f":true},{"id":"ENG2","n":"Jugador","f":false},{"id":"ENG3","n":"Jugador","f":false},{"id":"ENG4","n":"Jugador","f":false},{"id":"ENG5","n":"Jugador","f":false},{"id":"ENG6","n":"Jugador","f":false},{"id":"ENG7","n":"Jugador","f":false},{"id":"ENG8","n":"Jugador","f":false},{"id":"ENG9","n":"Jugador","f":false},{"id":"ENG10","n":"Jugador","f":false},{"id":"ENG11","n":"Jugador","f":false},{"id":"ENG12","n":"Jugador","f":false},{"id":"ENG13","n":"Foto Equipo","f":false},{"id":"ENG14","n":"Jugador","f":false},{"id":"ENG15","n":"Jugador","f":false},{"id":"ENG16","n":"Jugador","f":false},{"id":"ENG17","n":"Jugador","f":false},{"id":"ENG18","n":"Jugador","f":false},{"id":"ENG19","n":"Jugador","f":false},{"id":"ENG20","n":"Jugador","f":false}]},{"code":"FRA","name":"Francia","stickers":[{"id":"FRA1","n":"Escudo","f":true},{"id":"FRA2","n":"Jugador","f":false},{"id":"FRA3","n":"Jugador","f":false},{"id":"FRA4","n":"Jugador","f":false},{"id":"FRA5","n":"Jugador","f":false},{"id":"FRA6","n":"Jugador","f":false},{"id":"FRA7","n":"Jugador","f":false},{"id":"FRA8","n":"Jugador","f":false},{"id":"FRA9","n":"Jugador","f":false},{"id":"FRA10","n":"Jugador","f":false},{"id":"FRA11","n":"Jugador","f":false},{"id":"FRA12","n":"Jugador","f":false},{"id":"FRA13","n":"Foto Equipo","f":false},{"id":"FRA14","n":"Jugador","f":false},{"id":"FRA15","n":"Jugador","f":false},{"id":"FRA16","n":"Jugador","f":false},{"id":"FRA17","n":"Jugador","f":false},{"id":"FRA18","n":"Jugador","f":false},{"id":"FRA19","n":"Jugador","f":false},{"id":"FRA20","n":"Jugador","f":false}]},{"code":"GER","name":"Alemania","stickers":[{"id":"GER1","n":"Escudo","f":true},{"id":"GER2","n":"Jugador","f":false},{"id":"GER3","n":"Jugador","f":false},{"id":"GER4","n":"Jugador","f":false},{"id":"GER5","n":"Jugador","f":false},{"id":"GER6","n":"Jugador","f":false},{"id":"GER7","n":"Jugador","f":false},{"id":"GER8","n":"Jugador","f":false},{"id":"GER9","n":"Jugador","f":false},{"id":"GER10","n":"Jugador","f":false},{"id":"GER11","n":"Jugador","f":false},{"id":"GER12","n":"Jugador","f":false},{"id":"GER13","n":"Foto Equipo","f":false},{"id":"GER14","n":"Jugador","f":false},{"id":"GER15","n":"Jugador","f":false},{"id":"GER16","n":"Jugador","f":false},{"id":"GER17","n":"Jugador","f":false},{"id":"GER18","n":"Jugador","f":false},{"id":"GER19","n":"Jugador","f":false},{"id":"GER20","n":"Jugador","f":false}]},{"code":"GHA","name":"Ghana","stickers":[{"id":"GHA1","n":"Escudo","f":true},{"id":"GHA2","n":"Jugador","f":false},{"id":"GHA3","n":"Jugador","f":false},{"id":"GHA4","n":"Jugador","f":false},{"id":"GHA5","n":"Jugador","f":false},{"id":"GHA6","n":"Jugador","f":false},{"id":"GHA7","n":"Jugador","f":false},{"id":"GHA8","n":"Jugador","f":false},{"id":"GHA9","n":"Jugador","f":false},{"id":"GHA10","n":"Jugador","f":false},{"id":"GHA11","n":"Jugador","f":false},{"id":"GHA12","n":"Jugador","f":false},{"id":"GHA13","n":"Foto Equipo","f":false},{"id":"GHA14","n":"Jugador","f":false},{"id":"GHA15","n":"Jugador","f":false},{"id":"GHA16","n":"Jugador","f":false},{"id":"GHA17","n":"Jugador","f":false},{"id":"GHA18","n":"Jugador","f":false},{"id":"GHA19","n":"Jugador","f":false},{"id":"GHA20","n":"Jugador","f":false}]},{"code":"IRN","name":"Irán","stickers":[{"id":"IRN1","n":"Escudo","f":true},{"id":"IRN2","n":"Jugador","f":false},{"id":"IRN3","n":"Jugador","f":false},{"id":"IRN4","n":"Jugador","f":false},{"id":"IRN5","n":"Jugador","f":false},{"id":"IRN6","n":"Jugador","f":false},{"id":"IRN7","n":"Jugador","f":false},{"id":"IRN8","n":"Jugador","f":false},{"id":"IRN9","n":"Jugador","f":false},{"id":"IRN10","n":"Jugador","f":false},{"id":"IRN11","n":"Jugador","f":false},{"id":"IRN12","n":"Jugador","f":false},{"id":"IRN13","n":"Foto Equipo","f":false},{"id":"IRN14","n":"Jugador","f":false},{"id":"IRN15","n":"Jugador","f":false},{"id":"IRN16","n":"Jugador","f":false},{"id":"IRN17","n":"Jugador","f":false},{"id":"IRN18","n":"Jugador","f":false},{"id":"IRN19","n":"Jugador","f":false},{"id":"IRN20","n":"Jugador","f":false}]},{"code":"IRQ","name":"Irak","stickers":[{"id":"IRQ1","n":"Escudo","f":true},{"id":"IRQ2","n":"Jugador","f":false},{"id":"IRQ3","n":"Jugador","f":false},{"id":"IRQ4","n":"Jugador","f":false},{"id":"IRQ5","n":"Jugador","f":false},{"id":"IRQ6","n":"Jugador","f":false},{"id":"IRQ7","n":"Jugador","f":false},{"id":"IRQ8","n":"Jugador","f":false},{"id":"IRQ9","n":"Jugador","f":false},{"id":"IRQ10","n":"Jugador","f":false},{"id":"IRQ11","n":"Jugador","f":false},{"id":"IRQ12","n":"Jugador","f":false},{"id":"IRQ13","n":"Foto Equipo","f":false},{"id":"IRQ14","n":"Jugador","f":false},{"id":"IRQ15","n":"Jugador","f":false},{"id":"IRQ16","n":"Jugador","f":false},{"id":"IRQ17","n":"Jugador","f":false},{"id":"IRQ18","n":"Jugador","f":false},{"id":"IRQ19","n":"Jugador","f":false},{"id":"IRQ20","n":"Jugador","f":false}]},{"code":"CIV","name":"Costa de Marfil","stickers":[{"id":"CIV1","n":"Escudo","f":true},{"id":"CIV2","n":"Jugador","f":false},{"id":"CIV3","n":"Jugador","f":false},{"id":"CIV4","n":"Jugador","f":false},{"id":"CIV5","n":"Jugador","f":false},{"id":"CIV6","n":"Jugador","f":false},{"id":"CIV7","n":"Jugador","f":false},{"id":"CIV8","n":"Jugador","f":false},{"id":"CIV9","n":"Jugador","f":false},{"id":"CIV10","n":"Jugador","f":false},{"id":"CIV11","n":"Jugador","f":false},{"id":"CIV12","n":"Jugador","f":false},{"id":"CIV13","n":"Foto Equipo","f":false},{"id":"CIV14","n":"Jugador","f":false},{"id":"CIV15","n":"Jugador","f":false},{"id":"CIV16","n":"Jugador","f":false},{"id":"CIV17","n":"Jugador","f":false},{"id":"CIV18","n":"Jugador","f":false},{"id":"CIV19","n":"Jugador","f":false},{"id":"CIV20","n":"Jugador","f":false}]},{"code":"JPN","name":"Japón","stickers":[{"id":"JPN1","n":"Escudo","f":true},{"id":"JPN2","n":"Jugador","f":false},{"id":"JPN3","n":"Jugador","f":false},{"id":"JPN4","n":"Jugador","f":false},{"id":"JPN5","n":"Jugador","f":false},{"id":"JPN6","n":"Jugador","f":false},{"id":"JPN7","n":"Jugador","f":false},{"id":"JPN8","n":"Jugador","f":false},{"id":"JPN9","n":"Jugador","f":false},{"id":"JPN10","n":"Jugador","f":false},{"id":"JPN11","n":"Jugador","f":false},{"id":"JPN12","n":"Jugador","f":false},{"id":"JPN13","n":"Foto Equipo","f":false},{"id":"JPN14","n":"Jugador","f":false},{"id":"JPN15","n":"Jugador","f":false},{"id":"JPN16","n":"Jugador","f":false},{"id":"JPN17","n":"Jugador","f":false},{"id":"JPN18","n":"Jugador","f":false},{"id":"JPN19","n":"Jugador","f":false},{"id":"JPN20","n":"Jugador","f":false}]},{"code":"JOR","name":"Jordania","stickers":[{"id":"JOR1","n":"Escudo","f":true},{"id":"JOR2","n":"Jugador","f":false},{"id":"JOR3","n":"Jugador","f":false},{"id":"JOR4","n":"Jugador","f":false},{"id":"JOR5","n":"Jugador","f":false},{"id":"JOR6","n":"Jugador","f":false},{"id":"JOR7","n":"Jugador","f":false},{"id":"JOR8","n":"Jugador","f":false},{"id":"JOR9","n":"Jugador","f":false},{"id":"JOR10","n":"Jugador","f":false},{"id":"JOR11","n":"Jugador","f":false},{"id":"JOR12","n":"Jugador","f":false},{"id":"JOR13","n":"Foto Equipo","f":false},{"id":"JOR14","n":"Jugador","f":false},{"id":"JOR15","n":"Jugador","f":false},{"id":"JOR16","n":"Jugador","f":false},{"id":"JOR17","n":"Jugador","f":false},{"id":"JOR18","n":"Jugador","f":false},{"id":"JOR19","n":"Jugador","f":false},{"id":"JOR20","n":"Jugador","f":false}]},{"code":"NED","name":"Países Bajos","stickers":[{"id":"NED1","n":"Escudo","f":true},{"id":"NED2","n":"Jugador","f":false},{"id":"NED3","n":"Jugador","f":false},{"id":"NED4","n":"Jugador","f":false},{"id":"NED5","n":"Jugador","f":false},{"id":"NED6","n":"Jugador","f":false},{"id":"NED7","n":"Jugador","f":false},{"id":"NED8","n":"Jugador","f":false},{"id":"NED9","n":"Jugador","f":false},{"id":"NED10","n":"Jugador","f":false},{"id":"NED11","n":"Jugador","f":false},{"id":"NED12","n":"Jugador","f":false},{"id":"NED13","n":"Foto Equipo","f":false},{"id":"NED14","n":"Jugador","f":false},{"id":"NED15","n":"Jugador","f":false},{"id":"NED16","n":"Jugador","f":false},{"id":"NED17","n":"Jugador","f":false},{"id":"NED18","n":"Jugador","f":false},{"id":"NED19","n":"Jugador","f":false},{"id":"NED20","n":"Jugador","f":false}]},{"code":"NZL","name":"Nueva Zelanda","stickers":[{"id":"NZL1","n":"Escudo","f":true},{"id":"NZL2","n":"Jugador","f":false},{"id":"NZL3","n":"Jugador","f":false},{"id":"NZL4","n":"Jugador","f":false},{"id":"NZL5","n":"Jugador","f":false},{"id":"NZL6","n":"Jugador","f":false},{"id":"NZL7","n":"Jugador","f":false},{"id":"NZL8","n":"Jugador","f":false},{"id":"NZL9","n":"Jugador","f":false},{"id":"NZL10","n":"Jugador","f":false},{"id":"NZL11","n":"Jugador","f":false},{"id":"NZL12","n":"Jugador","f":false},{"id":"NZL13","n":"Foto Equipo","f":false},{"id":"NZL14","n":"Jugador","f":false},{"id":"NZL15","n":"Jugador","f":false},{"id":"NZL16","n":"Jugador","f":false},{"id":"NZL17","n":"Jugador","f":false},{"id":"NZL18","n":"Jugador","f":false},{"id":"NZL19","n":"Jugador","f":false},{"id":"NZL20","n":"Jugador","f":false}]},{"code":"NOR","name":"Noruega","stickers":[{"id":"NOR1","n":"Escudo","f":true},{"id":"NOR2","n":"Jugador","f":false},{"id":"NOR3","n":"Jugador","f":false},{"id":"NOR4","n":"Jugador","f":false},{"id":"NOR5","n":"Jugador","f":false},{"id":"NOR6","n":"Jugador","f":false},{"id":"NOR7","n":"Jugador","f":false},{"id":"NOR8","n":"Jugador","f":false},{"id":"NOR9","n":"Jugador","f":false},{"id":"NOR10","n":"Jugador","f":false},{"id":"NOR11","n":"Jugador","f":false},{"id":"NOR12","n":"Jugador","f":false},{"id":"NOR13","n":"Foto Equipo","f":false},{"id":"NOR14","n":"Jugador","f":false},{"id":"NOR15","n":"Jugador","f":false},{"id":"NOR16","n":"Jugador","f":false},{"id":"NOR17","n":"Jugador","f":false},{"id":"NOR18","n":"Jugador","f":false},{"id":"NOR19","n":"Jugador","f":false},{"id":"NOR20","n":"Jugador","f":false}]},{"code":"PAN","name":"Panamá","stickers":[{"id":"PAN1","n":"Escudo","f":true},{"id":"PAN2","n":"Jugador","f":false},{"id":"PAN3","n":"Jugador","f":false},{"id":"PAN4","n":"Jugador","f":false},{"id":"PAN5","n":"Jugador","f":false},{"id":"PAN6","n":"Jugador","f":false},{"id":"PAN7","n":"Jugador","f":false},{"id":"PAN8","n":"Jugador","f":false},{"id":"PAN9","n":"Jugador","f":false},{"id":"PAN10","n":"Jugador","f":false},{"id":"PAN11","n":"Jugador","f":false},{"id":"PAN12","n":"Jugador","f":false},{"id":"PAN13","n":"Foto Equipo","f":false},{"id":"PAN14","n":"Jugador","f":false},{"id":"PAN15","n":"Jugador","f":false},{"id":"PAN16","n":"Jugador","f":false},{"id":"PAN17","n":"Jugador","f":false},{"id":"PAN18","n":"Jugador","f":false},{"id":"PAN19","n":"Jugador","f":false},{"id":"PAN20","n":"Jugador","f":false}]},{"code":"POR","name":"Portugal","stickers":[{"id":"POR1","n":"Escudo","f":true},{"id":"POR2","n":"Jugador","f":false},{"id":"POR3","n":"Jugador","f":false},{"id":"POR4","n":"Jugador","f":false},{"id":"POR5","n":"Jugador","f":false},{"id":"POR6","n":"Jugador","f":false},{"id":"POR7","n":"Jugador","f":false},{"id":"POR8","n":"Jugador","f":false},{"id":"POR9","n":"Jugador","f":false},{"id":"POR10","n":"Jugador","f":false},{"id":"POR11","n":"Jugador","f":false},{"id":"POR12","n":"Jugador","f":false},{"id":"POR13","n":"Foto Equipo","f":false},{"id":"POR14","n":"Jugador","f":false},{"id":"POR15","n":"Jugador","f":false},{"id":"POR16","n":"Jugador","f":false},{"id":"POR17","n":"Jugador","f":false},{"id":"POR18","n":"Jugador","f":false},{"id":"POR19","n":"Jugador","f":false},{"id":"POR20","n":"Jugador","f":false}]},{"code":"KSA","name":"Arabia Saudita","stickers":[{"id":"KSA1","n":"Escudo","f":true},{"id":"KSA2","n":"Jugador","f":false},{"id":"KSA3","n":"Jugador","f":false},{"id":"KSA4","n":"Jugador","f":false},{"id":"KSA5","n":"Jugador","f":false},{"id":"KSA6","n":"Jugador","f":false},{"id":"KSA7","n":"Jugador","f":false},{"id":"KSA8","n":"Jugador","f":false},{"id":"KSA9","n":"Jugador","f":false},{"id":"KSA10","n":"Jugador","f":false},{"id":"KSA11","n":"Jugador","f":false},{"id":"KSA12","n":"Jugador","f":false},{"id":"KSA13","n":"Foto Equipo","f":false},{"id":"KSA14","n":"Jugador","f":false},{"id":"KSA15","n":"Jugador","f":false},{"id":"KSA16","n":"Jugador","f":false},{"id":"KSA17","n":"Jugador","f":false},{"id":"KSA18","n":"Jugador","f":false},{"id":"KSA19","n":"Jugador","f":false},{"id":"KSA20","n":"Jugador","f":false}]},{"code":"SEN","name":"Senegal","stickers":[{"id":"SEN1","n":"Escudo","f":true},{"id":"SEN2","n":"Jugador","f":false},{"id":"SEN3","n":"Jugador","f":false},{"id":"SEN4","n":"Jugador","f":false},{"id":"SEN5","n":"Jugador","f":false},{"id":"SEN6","n":"Jugador","f":false},{"id":"SEN7","n":"Jugador","f":false},{"id":"SEN8","n":"Jugador","f":false},{"id":"SEN9","n":"Jugador","f":false},{"id":"SEN10","n":"Jugador","f":false},{"id":"SEN11","n":"Jugador","f":false},{"id":"SEN12","n":"Jugador","f":false},{"id":"SEN13","n":"Foto Equipo","f":false},{"id":"SEN14","n":"Jugador","f":false},{"id":"SEN15","n":"Jugador","f":false},{"id":"SEN16","n":"Jugador","f":false},{"id":"SEN17","n":"Jugador","f":false},{"id":"SEN18","n":"Jugador","f":false},{"id":"SEN19","n":"Jugador","f":false},{"id":"SEN20","n":"Jugador","f":false}]},{"code":"ESP","name":"España","stickers":[{"id":"ESP1","n":"Escudo","f":true},{"id":"ESP2","n":"Jugador","f":false},{"id":"ESP3","n":"Jugador","f":false},{"id":"ESP4","n":"Jugador","f":false},{"id":"ESP5","n":"Jugador","f":false},{"id":"ESP6","n":"Jugador","f":false},{"id":"ESP7","n":"Jugador","f":false},{"id":"ESP8","n":"Jugador","f":false},{"id":"ESP9","n":"Jugador","f":false},{"id":"ESP10","n":"Jugador","f":false},{"id":"ESP11","n":"Jugador","f":false},{"id":"ESP12","n":"Jugador","f":false},{"id":"ESP13","n":"Foto Equipo","f":false},{"id":"ESP14","n":"Jugador","f":false},{"id":"ESP15","n":"Jugador","f":false},{"id":"ESP16","n":"Jugador","f":false},{"id":"ESP17","n":"Jugador","f":false},{"id":"ESP18","n":"Jugador","f":false},{"id":"ESP19","n":"Jugador","f":false},{"id":"ESP20","n":"Jugador","f":false}]},{"code":"SWE","name":"Suecia","stickers":[{"id":"SWE1","n":"Escudo","f":true},{"id":"SWE2","n":"Jugador","f":false},{"id":"SWE3","n":"Jugador","f":false},{"id":"SWE4","n":"Jugador","f":false},{"id":"SWE5","n":"Jugador","f":false},{"id":"SWE6","n":"Jugador","f":false},{"id":"SWE7","n":"Jugador","f":false},{"id":"SWE8","n":"Jugador","f":false},{"id":"SWE9","n":"Jugador","f":false},{"id":"SWE10","n":"Jugador","f":false},{"id":"SWE11","n":"Jugador","f":false},{"id":"SWE12","n":"Jugador","f":false},{"id":"SWE13","n":"Foto Equipo","f":false},{"id":"SWE14","n":"Jugador","f":false},{"id":"SWE15","n":"Jugador","f":false},{"id":"SWE16","n":"Jugador","f":false},{"id":"SWE17","n":"Jugador","f":false},{"id":"SWE18","n":"Jugador","f":false},{"id":"SWE19","n":"Jugador","f":false},{"id":"SWE20","n":"Jugador","f":false}]},{"code":"TUN","name":"Túnez","stickers":[{"id":"TUN1","n":"Escudo","f":true},{"id":"TUN2","n":"Jugador","f":false},{"id":"TUN3","n":"Jugador","f":false},{"id":"TUN4","n":"Jugador","f":false},{"id":"TUN5","n":"Jugador","f":false},{"id":"TUN6","n":"Jugador","f":false},{"id":"TUN7","n":"Jugador","f":false},{"id":"TUN8","n":"Jugador","f":false},{"id":"TUN9","n":"Jugador","f":false},{"id":"TUN10","n":"Jugador","f":false},{"id":"TUN11","n":"Jugador","f":false},{"id":"TUN12","n":"Jugador","f":false},{"id":"TUN13","n":"Foto Equipo","f":false},{"id":"TUN14","n":"Jugador","f":false},{"id":"TUN15","n":"Jugador","f":false},{"id":"TUN16","n":"Jugador","f":false},{"id":"TUN17","n":"Jugador","f":false},{"id":"TUN18","n":"Jugador","f":false},{"id":"TUN19","n":"Jugador","f":false},{"id":"TUN20","n":"Jugador","f":false}]},{"code":"URU","name":"Uruguay","stickers":[{"id":"URU1","n":"Escudo","f":true},{"id":"URU2","n":"Jugador","f":false},{"id":"URU3","n":"Jugador","f":false},{"id":"URU4","n":"Jugador","f":false},{"id":"URU5","n":"Jugador","f":false},{"id":"URU6","n":"Jugador","f":false},{"id":"URU7","n":"Jugador","f":false},{"id":"URU8","n":"Jugador","f":false},{"id":"URU9","n":"Jugador","f":false},{"id":"URU10","n":"Jugador","f":false},{"id":"URU11","n":"Jugador","f":false},{"id":"URU12","n":"Jugador","f":false},{"id":"URU13","n":"Foto Equipo","f":false},{"id":"URU14","n":"Jugador","f":false},{"id":"URU15","n":"Jugador","f":false},{"id":"URU16","n":"Jugador","f":false},{"id":"URU17","n":"Jugador","f":false},{"id":"URU18","n":"Jugador","f":false},{"id":"URU19","n":"Jugador","f":false},{"id":"URU20","n":"Jugador","f":false}]},{"code":"UZB","name":"Uzbekistán","stickers":[{"id":"UZB1","n":"Escudo","f":true},{"id":"UZB2","n":"Jugador","f":false},{"id":"UZB3","n":"Jugador","f":false},{"id":"UZB4","n":"Jugador","f":false},{"id":"UZB5","n":"Jugador","f":false},{"id":"UZB6","n":"Jugador","f":false},{"id":"UZB7","n":"Jugador","f":false},{"id":"UZB8","n":"Jugador","f":false},{"id":"UZB9","n":"Jugador","f":false},{"id":"UZB10","n":"Jugador","f":false},{"id":"UZB11","n":"Jugador","f":false},{"id":"UZB12","n":"Jugador","f":false},{"id":"UZB13","n":"Foto Equipo","f":false},{"id":"UZB14","n":"Jugador","f":false},{"id":"UZB15","n":"Jugador","f":false},{"id":"UZB16","n":"Jugador","f":false},{"id":"UZB17","n":"Jugador","f":false},{"id":"UZB18","n":"Jugador","f":false},{"id":"UZB19","n":"Jugador","f":false},{"id":"UZB20","n":"Jugador","f":false}]},{"code":"CC","name":"Coca-Cola","stickers":[{"id":"CC1","n":"Lamine Yamal","f":false},{"id":"CC2","n":"Lautaro Martínez","f":false},{"id":"CC3","n":"Harry Kane","f":false},{"id":"CC4","n":"Joshua Kimmich","f":false},{"id":"CC5","n":"Vinicius Jr.","f":false},{"id":"CC6","n":"Kylian Mbappé","f":false},{"id":"CC7","n":"Pedri","f":false},{"id":"CC8","n":"Cristiano Ronaldo","f":false},{"id":"CC9","n":"Lionel Messi","f":false},{"id":"CC10","n":"Rodri","f":false},{"id":"CC11","n":"Mohamed Salah","f":false},{"id":"CC12","n":"Erling Haaland","f":false}]}];
+const ALL = SECTIONS.flatMap(sec => sec.stickers.map(st => ({...st, sec:sec.code, secName:sec.name})));
+const TOTAL = ALL.length;
+
+// Populate team selector
+const sel = document.getElementById('team-sel');
+SECTIONS.forEach(sec => {
+  const o = document.createElement('option');
+  o.value = sec.code; o.textContent = sec.code + ' · ' + sec.name;
+  sel.appendChild(o);
+});
+
+let owned = {}, filter = 'all', team = 'all', search = '';
 
 function load() {
-  try {
-    const raw = localStorage.getItem('panini-2026');
-    if (raw) stickers = JSON.parse(raw);
-  } catch(e) {}
+  try { const r = localStorage.getItem('panini-2026'); if(r) owned = JSON.parse(r); } catch(e) {}
   render();
 }
 
 function save() {
-  try { localStorage.setItem('panini-2026', JSON.stringify(stickers)); } catch(e) {}
+  try { localStorage.setItem('panini-2026', JSON.stringify(owned)); } catch(e) {}
 }
 
 function stats() {
-  const owned = Object.keys(stickers).filter(k => (stickers[k]||0) > 0).length;
-  const rep = Object.values(stickers).filter(v => v > 1).length;
-  return { owned, rep, missing: TOTAL - owned, pct: Math.round(owned / TOTAL * 100) };
+  const hv = Object.keys(owned).filter(k => owned[k] > 0).length;
+  const rp = Object.values(owned).filter(v => v > 1).length;
+  return { hv, rp, ms: TOTAL - hv, pct: Math.round(hv / TOTAL * 100) };
 }
 
-function updateHeader() {
+function updateHdr() {
   const s = stats();
   document.getElementById('pct').textContent = s.pct + '%';
-  document.getElementById('prog-fill').style.width = s.pct + '%';
-  document.getElementById('s-tengo').textContent = s.owned;
-  document.getElementById('s-faltan').textContent = s.missing;
-  document.getElementById('s-rep').textContent = s.rep;
+  document.getElementById('pf').style.width = s.pct + '%';
+  document.getElementById('s-hv').textContent = s.hv;
+  document.getElementById('s-ms').textContent = s.ms;
+  document.getElementById('s-rp').textContent = s.rp;
 }
 
-function visible() {
-  const out = [];
-  for (let i = 1; i <= TOTAL; i++) {
-    const cnt = stickers[i] || 0;
-    if (search && !String(i).startsWith(search)) continue;
-    if (filter === 'tengo' && cnt === 0) continue;
-    if (filter === 'faltan' && cnt > 0) continue;
-    if (filter === 'rep' && cnt <= 1) continue;
-    out.push(i);
-  }
-  return out;
+function getFiltered() {
+  const q = search.toLowerCase();
+  return ALL.filter(st => {
+    const cnt = owned[st.id] || 0;
+    if(q && !st.id.toLowerCase().includes(q) && !st.n.toLowerCase().includes(q) && !st.secName.toLowerCase().includes(q)) return false;
+    if(team !== 'all' && st.sec !== team) return false;
+    if(filter === 'tengo' && cnt === 0) return false;
+    if(filter === 'faltan' && cnt > 0) return false;
+    if(filter === 'rep' && cnt <= 1) return false;
+    return true;
+  });
 }
 
 function render() {
-  updateHeader();
-  const list = visible();
-  document.getElementById('count-bar').textContent = list.length + ' láminas';
-  const grid = document.getElementById('grid');
-  if (!list.length) {
-    grid.innerHTML = '<div class="no-results">Sin resultados</div>';
-    return;
-  }
-  const frag = document.createDocumentFragment();
-  list.forEach(n => {
-    const cnt = stickers[n] || 0;
-    const div = document.createElement('div');
-    div.className = 'sticker ' + (cnt === 0 ? '' : cnt === 1 ? 'owned' : 'repeated');
-    div.dataset.n = n;
-    div.innerHTML = `<div class="s-num">${n}</div><div class="s-cnt">${cnt === 0 ? '—' : cnt === 1 ? '✓' : '×' + cnt}</div>`;
-    div.addEventListener('click', () => tap(n));
-    let holdTimer;
-    div.addEventListener('touchstart', () => { holdTimer = setTimeout(() => remove(n), 500); }, { passive: true });
-    div.addEventListener('touchend', () => clearTimeout(holdTimer), { passive: true });
-    div.addEventListener('contextmenu', e => { e.preventDefault(); remove(n); });
-    frag.appendChild(div);
+  updateHdr();
+  const list = getFiltered();
+  document.getElementById('cbar').textContent = list.length + ' láminas';
+  const wrap = document.getElementById('gwrap');
+  if(!list.length) { wrap.innerHTML = '<div class="no-r">Sin resultados</div>'; return; }
+  const grouped = {};
+  list.forEach(st => {
+    if(!grouped[st.sec]) grouped[st.sec] = {name:st.secName, items:[]};
+    grouped[st.sec].items.push(st);
   });
-  grid.innerHTML = '';
-  grid.appendChild(frag);
-
-  if (search) {
-    const first = grid.querySelector('.sticker');
-    if (first) first.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  const frag = document.createDocumentFragment();
+  Object.entries(grouped).forEach(([code, {name, items}]) => {
+    const hv = items.filter(st => (owned[st.id]||0) > 0).length;
+    const wrap2 = document.createElement('div');
+    wrap2.innerHTML = `<div class="team-hdr"><span>${code} · ${name}</span><span class="t-mini">${hv}/${items.length}</span></div>`;
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    items.forEach(st => buildChip(st, grid));
+    wrap2.appendChild(grid);
+    frag.appendChild(wrap2);
+  });
+  wrap.innerHTML = '';
+  wrap.appendChild(frag);
+  if(search) {
+    const first = wrap.querySelector('.stk');
+    if(first) first.scrollIntoView({block:'nearest',behavior:'smooth'});
   }
 }
 
-function updateSticker(n) {
-  const el = document.querySelector(`.sticker[data-n="${n}"]`);
-  if (!el) { render(); return; }
-  const cnt = stickers[n] || 0;
-  const hide = (filter === 'faltan' && cnt > 0) ||
-               (filter === 'tengo' && cnt === 0) ||
-               (filter === 'rep' && cnt <= 1);
-  if (hide) { el.remove(); updateHeader(); return; }
-  el.className = 'sticker ' + (cnt === 0 ? '' : cnt === 1 ? 'owned' : 'repeated');
-  el.querySelector('.s-num').textContent = n;
-  el.querySelector('.s-cnt').textContent = cnt === 0 ? '—' : cnt === 1 ? '✓' : '×' + cnt;
-  updateHeader();
+function buildChip(st, parent) {
+  const cnt = owned[st.id] || 0;
+  const s = document.createElement('div');
+  s.className = 'stk' + (cnt===0?'':cnt===1?' have':' rep');
+  s.dataset.id = st.id;
+  s.innerHTML =
+    (st.f ? '<div class="foil-dot"></div>' : '') +
+    (cnt > 0 ? '<div class="stk-rm" title="Quitar una">✕</div>' : '') +
+    `<div class="sid">${st.id}</div>` +
+    `<div class="sname">${st.n}</div>` +
+    `<div class="scnt">${cnt===0?'—':cnt===1?'✓':'×'+cnt}</div>`;
+  // Tap = add
+  s.addEventListener('click', e => {
+    if(e.target.classList.contains('stk-rm')) { e.stopPropagation(); rm(st.id); return; }
+    tap(st.id);
+  });
+  // Long press = remove
+  let ht;
+  s.addEventListener('touchstart', () => { ht = setTimeout(() => rm(st.id), 600); }, {passive:true});
+  s.addEventListener('touchend', () => clearTimeout(ht), {passive:true});
+  s.addEventListener('contextmenu', e => { e.preventDefault(); rm(st.id); });
+  parent.appendChild(s);
 }
 
-function tap(n) {
-  stickers[n] = (stickers[n] || 0) + 1;
-  save();
-  updateSticker(n);
+function updateChip(id) {
+  const el = document.querySelector(`.stk[data-id="${id}"]`);
+  if(!el) return;
+  const cnt = owned[id] || 0;
+  const hide = (filter==='faltan'&&cnt>0)||(filter==='tengo'&&cnt===0)||(filter==='rep'&&cnt<=1);
+  if(hide) { el.remove(); updateHdr(); return; }
+  // Rebuild chip content
+  const st = ALL.find(s => s.id === id);
+  if(!st) return;
+  el.className = 'stk' + (cnt===0?'':cnt===1?' have':' rep');
+  el.innerHTML =
+    (st.f ? '<div class="foil-dot"></div>' : '') +
+    (cnt > 0 ? '<div class="stk-rm" title="Quitar una">✕</div>' : '') +
+    `<div class="sid">${st.id}</div>` +
+    `<div class="sname">${st.n}</div>` +
+    `<div class="scnt">${cnt===0?'—':cnt===1?'✓':'×'+cnt}</div>`;
+  updateHdr();
 }
 
-function remove(n) {
-  if (!stickers[n]) return;
-  stickers[n]--;
-  if (stickers[n] === 0) delete stickers[n];
-  save();
-  updateSticker(n);
+function tap(id) {
+  owned[id] = (owned[id]||0)+1;
+  save(); updateChip(id);
+}
+
+function rm(id) {
+  if(!owned[id]) return;
+  owned[id]--;
+  if(owned[id]===0) delete owned[id];
+  save(); updateChip(id);
 }
 
 function setFilter(f) {
   filter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.f-' + f).classList.add('active');
+  ['all','tengo','faltan','rep'].forEach(x => {
+    const b = document.getElementById('f-'+x);
+    if(b) b.className = b.className.replace(/ on/,'') + (f===x?' on':'');
+  });
   render();
 }
+
+function setTeam(t) { team = t; render(); }
 
 function clearSearch() {
-  search = '';
-  document.getElementById('search-input').value = '';
-  render();
+  search = ''; document.getElementById('srch').value = ''; render();
 }
 
-document.getElementById('search-input').addEventListener('input', e => {
-  search = e.target.value.trim();
-  render();
+document.getElementById('srch').addEventListener('input', e => {
+  search = e.target.value.trim(); render();
 });
 
 function openModal(type) {
-  const title = document.getElementById('modal-title');
-  const body = document.getElementById('modal-body');
-  if (type === 'faltan') {
-    const list = [];
-    for (let i = 1; i <= TOTAL; i++) if (!stickers[i]) list.push(i);
-    title.textContent = `Faltantes (${list.length})`;
-    body.innerHTML = list.length
-      ? list.map(n => `<span class="tag tag-miss">${n}</span>`).join('')
-      : '<div class="empty-msg">¡Album completo! 🏆</div>';
+  const t = document.getElementById('mtitle'), b = document.getElementById('mbody');
+  if(type === 'f') {
+    const ms = ALL.filter(st => !(owned[st.id]));
+    t.textContent = `Faltantes (${ms.length})`;
+    b.innerHTML = ms.length ? ms.map(st => `<span class="tag tm">${st.id}</span>`).join('') : '<div class="empty">¡Álbum completo! 🏆</div>';
   } else {
-    const list = [];
-    for (let i = 1; i <= TOTAL; i++) if ((stickers[i]||0) > 1) list.push({ n: i, cnt: stickers[i] });
-    title.textContent = `Repetidas (${list.length})`;
-    body.innerHTML = list.length
-      ? list.map(({ n, cnt }) => `<span class="tag tag-rep">${n} ×${cnt}</span>`).join('')
-      : '<div class="empty-msg">Sin repetidas aún</div>';
+    const rp = ALL.filter(st => (owned[st.id]||0) > 1);
+    t.textContent = `Repetidas (${rp.length})`;
+    b.innerHTML = rp.length ? rp.map(st => `<span class="tag ta">${st.id} ×${owned[st.id]}</span>`).join('') : '<div class="empty">Sin repetidas aún</div>';
   }
   document.getElementById('modal').classList.add('open');
 }
 
 function closeModal(e) {
-  if (!e || e.target === document.getElementById('modal')) {
+  if(!e || e.target === document.getElementById('modal'))
     document.getElementById('modal').classList.remove('open');
-  }
 }
 
 function resetAll() {
-  if (!confirm('¿Reiniciar el álbum? Se borra todo el progreso.')) return;
-  stickers = {};
-  save();
-  render();
+  if(!confirm('¿Reiniciar todo el álbum? Se perderá el progreso.')) return;
+  owned = {}; save(); render();
 }
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 load();
 </script>
 </body>
